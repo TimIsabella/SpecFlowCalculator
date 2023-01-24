@@ -1,10 +1,14 @@
+using TechTalk.SpecFlow;   //SpecFlow
 using FluentAssertions;  //Adds additional extentions like .Should() and .Be()
 
 namespace SpecFlowCalculator.Specs.StepDefinitions
 {
    [Binding]
+   [Scope(Feature = "CalculatorStepDefinitions")]
    public sealed class CalculatorStepDefinitions
    {
+      /// /////////// Calculator Feature
+      
       // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
       private readonly Calculator _calculator = new Calculator();
       private int _result;
@@ -32,7 +36,7 @@ namespace SpecFlowCalculator.Specs.StepDefinitions
       [Then("the result should be (.*)")]
       public void ThenTheResultShouldBe(int result)
       {
-         _result.Should().Be(result);  //Check that the _result set by .Add() method above equals the parameter 'result'
+         _result.Should().Be(result);  //Check that the _result1 set by .Add() method above equals the parameter 'result'
       }
    }
 }
