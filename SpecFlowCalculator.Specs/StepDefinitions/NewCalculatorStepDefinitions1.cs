@@ -1,5 +1,6 @@
 using TechTalk.SpecFlow;
 using FluentAssertions;
+using TechTalk.SpecFlow.CommonModels;
 
 namespace SpecFlowCalculator.Specs.StepDefinitions
 {
@@ -10,7 +11,7 @@ namespace SpecFlowCalculator.Specs.StepDefinitions
       private readonly Calculator _calculator = new Calculator();
       private int _result;
 
-      //Called before the feature
+      //Called before the feature (must be static)
       [BeforeFeature]
       public static void BeforeTheFeatureHasBegun()
       {
@@ -24,7 +25,7 @@ namespace SpecFlowCalculator.Specs.StepDefinitions
          Console.WriteLine("A 'NewCalculatorStepDefinitions1' scenario test has begun.");
       }
 
-      //Called before every step
+      //Called before each step
       [BeforeStep]
       public void BeforeEachStepHasBegun()
       {
@@ -43,6 +44,14 @@ namespace SpecFlowCalculator.Specs.StepDefinitions
       public void GivenTheSecondPropertyIs(int number)
       {
          _calculator.SecondNumber = number;
+      }
+
+      [Given("the combined properties equal (.*)")]
+      public void AndTheCombinedPropertiesEqual(int number)
+      {
+         var result = _calculator.FirstNumber + _calculator.SecondNumber;
+         
+        result.Should().Be(number);
       }
 
       [When("the two numbers are multiplied")]
@@ -69,9 +78,15 @@ namespace SpecFlowCalculator.Specs.StepDefinitions
          _result.Should().Be(result);
       }
 
+      [Then(@"print the comment ""([^""]*)""")]
+      public void ThenTheNewResultShouldBe(string stringResult)
+      {
+         Console.WriteLine($"The result is: {stringResult}");
+      }
+
       /// //////////////////////////////////////////////////////////////////
 
-      //Called after every step
+      //Called after each step
       [AfterStep]
       public void AfterEachStepHasCompleted()
       {
@@ -85,7 +100,7 @@ namespace SpecFlowCalculator.Specs.StepDefinitions
          Console.WriteLine("A 'NewCalculatorStepDefinitions1' scenario has completed.");
       }
 
-      //Called after each feature
+      //Called after each feature (must be static)
       [AfterFeature]
       public static void AfterTheFeatureHasCompleted()
       {
